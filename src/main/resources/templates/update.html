@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{#conventionToEdit}}
+{{name}}, {{location}}, {{maxPop}}, {{category}} <br/>
+<form action="update-convention" method="post">
+    <input type="text" placeholder="Name of Con." name="conName"/>
+    <input type="text" placeholder="Location of Con." name="conLocation"/>
+    <input type="number" placeholder="Max Capacity" name="conPop"/>
+    <select name="conGenre">
+        <option selected disabled>Theme</option>
+        <option value="comics">Comics</option>
+        <option value="movies">Movies</option>
+        <option value="games">Games</option>
+        <option value="anime">Anime</option>
+        <option value="horror">Horror</option>
+    </select>
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">Submit</button>
+</form>
+{{/conventionToEdit}}
+</body>
+</html>
