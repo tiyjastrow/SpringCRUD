@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter your name." name="name"/>
+    <input type="password" placeholder="Enter your password" name="password"/>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Hello, {{name}}.<br/>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<form action="/add-convention" method="post">
+    <input type="text" placeholder="Name of Con." name="conName"/>
+    <input type="text" placeholder="Location of Con." name="conLocation"/>
+    <input type="number" placeholder="Max Capacity" name="conPop"/>
+    <select name="conGenre">
+        <option selected disabled>Theme</option>
+        <option value="comics">Comics</option>
+        <option value="movies">Movies</option>
+        <option value="games">Games</option>
+        <option value="anime">Anime</option>
+        <option value="horror">Horror</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+{{/user}}
+<ul>
+    {{#userConList}}
+    <li>{{name}}, {{location}}, {{maxPop}}, {{category}}
+        <form action="update" method="get">
+            <input type="hidden" value="{{id}}" name="id"/>
+            <button type="submit">Edit</button>
+        </form>
+        <form action="delete-convention" method="post">
+            <input type="hidden" value="{{id}}" name="id"/>
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {{/userConList}}
+{{#conventions}}
+    <li>{{name}}, {{location}}, {{maxPop}}, {{category}}
+    </li>
+{{/conventions}}
+</ul>
+</body>
+</html>
