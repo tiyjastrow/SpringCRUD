@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Public Event Board</title>
+</head>
+<body>
+
+{{^user}}
+{{warning}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter your name" name="name" />
+    <input type="password" placeholder="Enter your password" name="password" />
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Welcome, {{name}}, You can now create or edit your own concerts and events<br/>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form><br/>
+
+<form action="/create-event" method="post">
+    <input type="text" placeholder="Name of the event" name="eventName" />
+    <input type="text" placeholder="Description" name="description" size="50" />
+    <input type="datetime-local" name="dateTime" value="{{now}}" />
+    <button type="submit">Add Event</button>
+</form>
+{{/user}}
+
+<ul>
+{{#userEvents}}
+    <li>
+        {{^editorHidden}}
+            <form action="/accept-changes" method="post">
+                <input type="hidden" name="id" value="{{id}}" />
+                {{name}}
+                <input type="text" placeholder="New name of the event" name="eventName" /><br/>
+                {{description}}
+                <input type="text" placeholder="New description" name="description" size="50" /><br/>
+                {{dateTime}}
+                <input type="datetime-local" name="dateTime" value="{{thisDate}}" /><br/>
+                <button type="submit">Accept</button>
+                <button type="submit" formaction="/edit-event">Cancel</button>
+            </form>
+        {{/editorHidden}}
+        {{#editorHidden}}
+            {{name}}<br/>
+            {{description}}, on {{dateTime}}<br/>
+            Hosted by {{user.name}}<br/>
+            <form action="/edit-event" method="post">
+                <input type="hidden" name="id" value="{{id}}" />
+                <button type="submit">Edit</button>
+                <button type="submit" formaction="/delete-event">Delete</button>
+            </form>
+        {{/editorHidden}}
+    </li>
+{{/userEvents}}
+
+{{#events}}
+    <li>
+        {{name}}<br/>
+        {{description}}, on {{dateTime}}<br/>
+        Hosted by {{user.name}}
+    </li>
+{{/events}}
+</ul>
+
+</body>
+</html>
