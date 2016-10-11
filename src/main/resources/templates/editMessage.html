@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+{{#concert}}
+<form action="/edit" method="post">
+    <input type="text" placeholder="{{band}}" name="band"/>
+    <input type="text" placeholder="{{venue}}" name="venue"/>
+    <input type="text" placeholder="{{year}}" name="year"/>
+    <button type="submit">edit</button>
+</form>
+{{/concert}}
+</body>
+</html>

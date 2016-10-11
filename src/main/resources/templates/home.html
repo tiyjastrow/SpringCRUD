@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="enter your name" name="name"/>
+    <input type="password" placeholder="enter your password" name="password"/>
+    <button type="submit">login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Welcome {{name}},
+<form action="/logout" method="post">
+    <button type="submit">logout</button>
+</form>
+<br/>
+<form action="create-concert" method="post">
+    <input type="text" placeholder="enter the band" name="band"/>
+    <input type="text" placeholder="enter the venue" name="venue"/>
+    <input type="text" placeholder="enter the year" name="year"/>
+    <button type="submit">Add Concert</button>
+</form>
+{{/user}}
+{{#concerts}}
+{{id}}. {{band}}, {{venue}}, {{year}}
+{{#sameUser}}
+<form action="/edit-concert" method="post">
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">edit</button>
+</form>
+<form action="/delete-concert" method="post">
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">delete</button>
+</form>
+{{/sameUser}}
+{{/concerts}}
+</body>
+</html>
