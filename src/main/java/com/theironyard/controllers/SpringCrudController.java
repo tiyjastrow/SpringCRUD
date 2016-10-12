@@ -42,12 +42,20 @@ public class SpringCrudController {
             return "redirect:/";
         }
 
-        session.setAttribute("name", name);
+        session.setAttribute("userName", name);
         return "redirect:/";
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession session) {
+
+        ArrayList<Information> infoList = (ArrayList) player_information.findAll();
+        for (Information i : infoList) {
+            Information check = player_information.findOne(i.getId());
+            check.setDisplay(null);
+            player_information.save(check);
+        }
+
         session.invalidate();
         return "redirect:/";
     }
@@ -55,16 +63,18 @@ public class SpringCrudController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(HttpSession session, Model model) {
 
-        String name = (String) session.getAttribute("name");
+        String name = (String) session.getAttribute("userName");
 
-        Player p = players.findByUserName(name);
+        Player player = players.findByUserName(name);
 
-        ArrayList<Information> information = (ArrayList<Information>) player_information.findAll();
+        ArrayList<Information> infoList = (ArrayList) player_information.findAll();
 
-        if (name != null) {
-            for (Information i : information) {
+        model.addAttribute("player", player);
+
+        if (player != null) {
+            for (Information i : infoList) {
                 Information check = player_information.findOne(i.getId());
-                if (p.getId() == i.getPlayer().getId()){
+                if (player.getId() == i.getPlayer().getId()){
                     check.setDisplay("yes");
                     player_information.save(check);
                 }
@@ -75,19 +85,18 @@ public class SpringCrudController {
             }
         }
 
+        ArrayList<Information> information = (ArrayList) player_information.findAll();
         Collections.sort(information);
-
-        model.addAttribute("player", p);
         model.addAttribute("information", information);
+
         return "home";
     }
 
     @RequestMapping(path = "/add-entry", method = RequestMethod.POST)
-    public String addEntry(HttpSession session, String firstName, String lastName, String country, String playingStyle, int wins, int losses) {
+    public String addEntry(String firstName, String lastName, String country, String playingStyle, int wins, int losses, int playerId) {
 
-        String name = (String) session.getAttribute("name");
         String display = "yes";
-        Player player = players.findByUserName(name);
+        Player player = players.findById(playerId);
 
         player_information.save(new Information(firstName, lastName, country, playingStyle, wins, losses, player, display));
 
