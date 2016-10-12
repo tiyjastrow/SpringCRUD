@@ -31,16 +31,24 @@ public class SpringCrudController {
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String name, String password) throws Exception {
 
-        session.setAttribute("name", name);
-
         Player player = players.findByUserName(name);
 
         if (player == null) {
             Player p = new Player(name, PasswordStorage.createHash(password));
             players.save(p);
-        } else if (!PasswordStorage.verifyPassword(password, player.getPassword())) {
+        }
+
+        else if (! PasswordStorage.verifyPassword (password, player.getPassword())) {
             return "redirect:/";
         }
+
+        session.setAttribute("name", name);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/";
     }
 
@@ -72,12 +80,6 @@ public class SpringCrudController {
         model.addAttribute("player", p);
         model.addAttribute("information", information);
         return "home";
-    }
-
-    @RequestMapping(path = "/logout", method = RequestMethod.POST)
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
     }
 
     @RequestMapping(path = "/add-entry", method = RequestMethod.POST)
