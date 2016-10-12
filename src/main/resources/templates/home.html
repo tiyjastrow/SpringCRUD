@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{{^player}}
+<form action="/login", method="post">
+    <input type="text" placeholder="Name" name="name"/>
+    <input type="text" placeholder="Password" name="password"/>
+    <button type="submit">Login</button>
+</form>
+{{/player}}
+
+{{#player}}
+
+<form action="/logout" method="post">
+<button type="submit">Logout</button>
+</form>
+
+Aloha {{.}}
+
+<form action="/add-entry" method="post">
+    <input type="text" placeholder="First name" name="firstName"/>
+    <input type="text" placeholder="Last name" name="lastName"/>
+    <input type="text" placeholder="Country" name="country"/>
+    <input type="text" placeholder="Playing style" name="playingStyle"/>
+    <input type="number" placeholder="wins" name="wins"/>
+    <input type="number" placeholder="losses" name="losses"/>
+    <input type="hidden" value="{{id}}" name = "playerId">
+    <button type="submit">Add entry</button>
+</form>
+
+{{/player}}
+<ol>
+{{#information}}
+<li>{{.}}</li><br>
+    {{#display}}
+    <form action="/edit-entry" method="post">
+        <input type="text" placeholder="First name" name="firstName"/>
+        <input type="text" placeholder="Last name" name="lastName"/>
+        <input type="text" placeholder="Country" name="country"/>
+        <input type="text" placeholder="Playing style" name="playingStyle"/>
+        <input type="text" placeholder="wins" name="wins"/>
+        <input type="text" placeholder="losses" name="losses"/>
+        <input type="hidden" value ={{id}} name="id">
+        <button type="submit">Edit entry</button>
+    </form>
+
+    <form action="/delete-entry" method="post">
+        <input type="hidden" value ={{id}} name="id">
+        <button type="submit">Delete entry</button>
+    </form>
+    {{/display}}
+{{/information}}
+</ol>
+
+
+
+</body>
+</html>
