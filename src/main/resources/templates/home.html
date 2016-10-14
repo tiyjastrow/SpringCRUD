@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Science Is The Best!</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter Name" name="name">
+    <input type="password" placeholder="Enter Password" name="password">
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+<p class="welcome">Welcome {{name}}!</p>
+<form class="logout" action="/logout" method="post">
+    <button type="submit" style="width:60px;height:30px;">Logout</button>
+</form>
+<p class="header">Track your favorite Periodic Elements Here!</p>
+
+<form class="userInput" action="/add-element" method="post">
+    <input type="text" placeholder="Element Name" name="elementName">
+    <input type="text" placeholder="Symbol" name="elementSymbol">
+    <input type="number" placeholder="Atomic Number" name="atomicNumber">
+    <input type="number" step="any" placeholder="Atomic Weight" name="atomicWeight">
+    <button type="reset">Clear</button>
+    <button type="submit">Submit!</button>
+</form>
+
+{{/user}}
+<ol>
+    {{#periodicElements}}
+    <li>
+        <b><a href="https://www.google.com/webhp#q={{name}}">{{name}}</a></b>'s symbol is <b>{{symbol}}</b>. It has an
+        atomic number of <b>{{atomicNumber}}</b> and an atomic
+        weight of <b>{{atomicWeight}}</b>.
+        {{#author}}
+        <form class="update" action="/edit-element" method="get">
+            <input type="hidden" value="{{id}}" name="id">
+            <button type="submit">Edit</button>
+            <button type="submit" formaction="/delete-element" formmethod="post">Delete</button>
+        </form>
+        {{/author}}
+    </li>
+    <br>
+    {{/periodicElements}}
+</ol>
+</body>
+</html>
