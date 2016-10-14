@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+{{^username}}
+<form action="/login"method="post">
+    <input type="text" placeholder="Username" name="username"/>
+    <input type="password" placeholder="Password" name="password"/>
+    <button type="submit">Login</button>
+</form>
+{{/username}}
+<br>
+{{#username}}
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br>
+<form action="/create-book" method="post">
+    <input type="text" placeholder="Title" name="title"/>
+    <input type="text" placeholder="Author" name="author"/>
+    <input type="text" placeholder="Genre" name="genre"/>
+    <button type="submit">Create Book</button>
+</form>
+{{/username}}
+<h2>Book Tracker</h2>
+<ul>
+    {{#books}}
+    <li>{{title}} - {{author}} - {{genre}}</li>
+    {{#viewable}}
+<form action="/update" method="post">
+    <input type="text" placeholder="Edit Title" name="title"/>
+    <input type="text" placeholder="Edit Author" name="author"/>
+    <input type="text" placeholder="Edit Genre" name="genre"/>
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">Edit Book</button>
+</form>
+<form action="/delete" method="post">
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">Delete Book</button>
+</form>
+    {{/viewable}}
+    {{/books}}
+</ul>
+
+</body>
+</html>
