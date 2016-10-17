@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="UserName" name="userName" required/>
+    <input type="password" placeholder="Password" name="password" required/>
+    <input type="text" placeholder="Current Job" name="job" required/>
+    <button type="submit">Submit</button>
+</form>
+{{/user}}
+{{#user}}
+Welcome, {{userName}} | Current Job: {{currentJob}}
+<form action="/logout" method="post">
+    <button type="submit">LogOut</button>
+</form>
+<form action="/" method="get">
+    <button type="submit">All jobs</button>
+</form>
+<form action="/" method="get">
+    <button type="submit">All your jobs</button>
+    <input type="hidden" value="0" name="byUser"/>
+</form>
+<form action="/" method="get">
+    <button type="submit">Job position</button>
+    <input type="text" placeholder="Job position" name="position"/>
+</form>
+<form action="/" method="get">
+    <button type="submit">Job salary</button>
+    <input type="number" placeholder="Minimum Salary" name="salary"/>
+</form>
+<form action="/" method="get">
+    <button type="submit">Job Experience</button>
+    <input type="number" placeholder="Greatest Experience Needed" name="yearsOfExperienceNeeded"/>
+</form>
+<form action="/" method="get">
+    <button type="submit">Job Location</button>
+    <input type="text" placeholder="Job Location" name="cityLocated"/>
+</form>
+<br>
+<hr>
+Add a Job:<br>
+<form action="/add-job" method="post">
+    <input type="text" placeholder="Name of Job" name="job"/>
+    <input type="number" placeholder="Starting Salary" name="salary"/>
+    <input type="text" placeholder="Job location" name="location"/>
+    <input type="number" placeholder="Years of Experience Required" name="experience"/>
+    <button type="submit">Add Job</button>
+</form>
+<hr>
+<ol>
+    {{#jobs}}
+    <li>
+        <form action="/job" method="get">
+            <button type="submit">{{position}}</button>
+            <input type="hidden" value="{{id}}" name="id"/>
+        </form>
+    </li>
+    {{/jobs}}
+</ol>
+
+
+{{/user}}
+</body>
+</html>
