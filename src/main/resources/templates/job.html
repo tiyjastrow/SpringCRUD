@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job</title>
+</head>
+<body>
+<form action="/" method="get">
+    <button type="submit" >Job List</button>
+</form>
+{{#job}}
+Job position: {{position}}<br/>
+Job Salary: {{salary}}<br/>
+Required Exp: {{yearsOfExperienceNeeded}}<br/>
+Job location: {{cityLocated}}<br>
+<hr>
+{{#show}}
+Edit Job:
+<form action="/edit-job" method="post">
+    <input type="text" placeholder="Name of Job" name="job"/>
+    <input type="number" placeholder="Starting Salary" name="salary"/>
+    <input type="text" placeholder="Job location" name="location"/>
+    <input type="number" placeholder="Years of Experience Required" name="experience"/>
+    <input type="hidden" value="{{id}}"/>
+    <button type="submit">Edit Job</button>
+</form>
+<hr>
+Delete job:
+<form action="/delete" method="post">
+    <button type="submit" value="{{id}}" name="id">Delete Job</button>
+</form>
+{{/show}}
+{{/job}}
+</body>
+</html>
