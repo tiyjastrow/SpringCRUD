@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<h1>Movie List</h1>
+
+{{^user}}
+
+<form action="/login" method="post"/>
+<input type="text" placeholder="Enter your name" name="name"/>
+<input type="password" placeholder="Enter your password" name="password"/>
+<button type="submit">Login</button>
+</form>
+{{/user}}
+<br>
+
+{{#user}}
+Welcome, {{name}}!<br/>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br>
+
+<form action="/add-movie" method="post"/>
+<input type="text" placeholder="Movie name" name="movieName"/>
+<input type="text" placeholder="Movie rating" name="movieRating"/>
+<input type="text" placeholder="Movie genre" name="movieGenre"/>
+<input type="number" placeholder="Movie Release Year" name="movieYear"/>
+<button type="submit">Submit</button>
+</form>
+{{/user}}
+<br>
+
+{{#userMovieList}}
+<li>{{name}}-- {{rating}}-- {{genre}}-- {{releaseYear}}<br> {{#show}}
+    <form action="/update" method="post"/>
+    <input type="text" placeholder="Movie name" name="movieName"/>
+    <input type="text" placeholder="Movie rating" name="movieRating"/>
+    <input type="text" placeholder="Movie genre" name="movieGenre"/>
+    <input type="number" placeholder="Movie Release Year" name="movieYear"/>
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">Edit movie</button>
+    </form>
+
+    <form action="/delete-movie" method="post">
+        <button type="submit" value="{{id}}" name="id">Delete movie</button>
+    </form>
+    {{/show}}
+    <br></li>
+{{/userMovieList}}
+
+</body>
+</html>
