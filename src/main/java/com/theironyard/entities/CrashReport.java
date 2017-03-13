@@ -39,4 +39,8 @@ public class CrashReport {
     }
 
     public CrashReport() {}
+
+    public User getUser() {
+        return user;
+    }
 }

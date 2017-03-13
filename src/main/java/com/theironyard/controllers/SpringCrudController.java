@@ -64,4 +64,26 @@ public class SpringCrudController {
         }
         return "redirect:/";
     }
+
+    @RequestMapping(path = "/update", method = RequestMethod.GET)
+    public String update(Model model, HttpSession session, Integer id) {
+        CrashReport crashReport = crashReports.findFirstById(id);
+        String username = (String) session.getAttribute("username");
+        if (crashReport != null && crashReport.getUser().getUsername().equals(username)) {
+            model.addAttribute("crashReport", crashReport);
+        } else {
+            return "redirect:/";
+        }
+        return "update";
+    }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public String delete(HttpSession session, Integer id) {
+        String crashReportUsername = crashReports.findUser_UsernameById(id);
+        String username = (String) session.getAttribute("username");
+        if (crashReportUsername != null && crashReportUsername.equals(username)) {
+            crashReports.delete(id);
+        }
+        return "redirect:/";
+    }
 }
