@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringCRUD.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringCRUD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringCRUD_main.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringCRUD_main.iml" group="SpringCRUD" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpringCRUD_test.iml" filepath="$PROJECT_DIR$/.idea/modules/SpringCRUD_test.iml" group="SpringCRUD" />
+    </modules>
+  </component>
+</project>
