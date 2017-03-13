@@ -1,7 +1,6 @@
 package com.bharris.services;
 
 import com.bharris.entities.Item;
-import com.bharris.entities.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

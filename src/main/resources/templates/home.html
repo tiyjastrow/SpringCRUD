@@ -17,19 +17,19 @@
 <form action="/logout" method="post">
     <button type="submit">Logout</button>
 </form>
-<h1>Welcome, {{name}}! </h1><br/>
-
+<h1>Welcome, {{name}}! </h1>
+<h5>Track your things...</h5>
 <form action="/create-event" method="post">
     <input type="text" placeholder="description" name="description" size="50"/>
     <input type="datetime-local" name="localDate" value="{{now}}"/>
     <button type="submit">Add Event</button>
 </form>
 {{/user}}
-
+Your Items<br>
 {{#userItems}}
 {{description}} {{localDate}}
 <form style="display: inline" action="/update" method="post">
-    <input type="text" placeholder="description" name="description for updating" size="50"/>
+    <input type="text" placeholder="description for updating" name="description" size="50"/>
     <input type="hidden" name="id" value="{{id}}"/>
     <button type="submit">Update</button>
 </form>
@@ -37,7 +37,10 @@
     <button type="submit">Delete</button>
 </form>
 <br/>
+
 {{/userItems}}
+<hr>
+Other's Items
 {{#events}}
     {{description}} {{localDate}}
     <br/>
