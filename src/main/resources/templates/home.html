@@ -18,6 +18,19 @@ Hello, {{username}}!
 <form action="/logout" method="post">
     <button type="submit">Logout</button>
 </form>
+
+<form action="/report-crash" method="post">
+    <input type="number" placeholder="Interstate #" name="interstate">
+    <input type="number" placeholder="Mile Marker" name="mileMarker">
+    <input type="number" placeholder="# Of Vehicles" name="numberOfVehicles">
+    <input type="text" placeholder="Description" name="description">
+    <button type="submit">Report</button>
+</form>
 {{/user}}
+
+{{#crashReports}}
+Interstate {{interstate}}, Mile Marker {{mileMarker}}, Number of Vehicles {{numberOfVehicles}}, Description {{description}}
+Submitted By {{#user}} {{username}} {{/user}}
+{{/crashReports}}
 </body>
 </html>
