@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class SpringCrudController {
@@ -23,10 +24,14 @@ public class SpringCrudController {
     public String home(HttpSession session, Model model) {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByUsername(username);
+        List<CrashReport> allCrashReports = crashReports.findAllByOrderByTime();
         if (user != null) {
             model.addAttribute("user", user);
+            List<CrashReport> userCrashReports = crashReports.findByUser_Username(username);
+            model.addAttribute("userReports", userCrashReports);
+            allCrashReports.removeAll(userCrashReports);
         }
-        model.addAttribute("crashReports", crashReports.findAll());
+        model.addAttribute("crashReports", allCrashReports);
         return "home";
     }
 

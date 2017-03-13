@@ -26,11 +26,16 @@ Hello, {{username}}!
     <input type="text" placeholder="Description" name="description">
     <button type="submit">Report</button>
 </form>
+
+{{#userReports}}
+I-{{interstate}}, Mile Marker {{mileMarker}}, Number of Vehicles {{numberOfVehicles}}, Description {{description}}, {{time}}<br>
+{{/userReports}}
 {{/user}}
 
+<hr>
 {{#crashReports}}
 Interstate {{interstate}}, Mile Marker {{mileMarker}}, Number of Vehicles {{numberOfVehicles}}, Description {{description}}
-Submitted By {{#user}} {{username}} {{/user}}
+Submitted By {{#user}} {{username}} {{/user}} {{time}}<br>
 {{/crashReports}}
 </body>
 </html>
