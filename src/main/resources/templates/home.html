@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident Reports</title>
+</head>
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Username" name="username">
+    <input type="password" placeholder="Password" name="password">
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Hello, {{username}}!
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+{{/user}}
+</body>
+</html>
