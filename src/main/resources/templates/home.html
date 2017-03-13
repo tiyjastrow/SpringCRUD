@@ -26,8 +26,21 @@
 </form>
 {{/user}}
 
+{{#userItems}}
+{{description}} {{localDate}}
+<form style="display: inline" action="/update" method="post">
+    <input type="text" placeholder="description" name="description for updating" size="50"/>
+    <input type="hidden" name="id" value="{{id}}"/>
+    <button type="submit">Update</button>
+</form>
+<form style="display: inline;" action="/delete?id={{id}}" method="post">
+    <button type="submit">Delete</button>
+</form>
+<br/>
+{{/userItems}}
 {{#events}}
-    {{description}} {{localDate}}<br/>
+    {{description}} {{localDate}}
+    <br/>
 {{/events}}
 </body>
 </html>

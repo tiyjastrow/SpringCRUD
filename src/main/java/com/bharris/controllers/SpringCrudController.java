@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -28,6 +29,9 @@ public class SpringCrudController {
         List<Item> listItems = items.findAllByOrderByLocalDateDesc();
         if(userName != null) {
             User user = users.findFirstByName(userName);
+            List<Item> userItems = items.findAllByUser_Name(userName);
+            listItems.removeAll(userItems);
+            model.addAttribute("userItems", userItems);
             model.addAttribute("user", user);
             model.addAttribute("now",  LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         }
@@ -49,12 +53,32 @@ public class SpringCrudController {
         return "redirect:/";
     }
 
+    @RequestMapping(path="/logout", method=RequestMethod.POST)
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @RequestMapping(path="/create-event", method=RequestMethod.POST)
     public String createEvent(HttpSession session, String description, String localDate){
         String name = (String)session.getAttribute("userName");
         User user = users.findFirstByName(name);
         Item i = new Item(description, LocalDateTime.parse(localDate), user);
         items.save(i);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path="/update", method=RequestMethod.POST)
+    public String updateItem(HttpSession session, int id, String description){
+        String name = (String)session.getAttribute("userName");
+        items.updateDescription(description, id);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(path="/delete", method=RequestMethod.POST)
+    public String deleteMessage(Model model, int id){
+        items.delete(id);
         return "redirect:/";
     }
 
