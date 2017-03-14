@@ -66,7 +66,7 @@ public class SpringCrudController {
     }
 
     @RequestMapping(path = "/update", method = RequestMethod.GET)
-    public String update(Model model, HttpSession session, Integer id) {
+    public String getUpdate(Model model, HttpSession session, Integer id) {
         CrashReport crashReport = crashReports.findFirstById(id);
         String username = (String) session.getAttribute("username");
         if (crashReport != null && crashReport.getUser().getUsername().equals(username)) {
@@ -77,6 +77,16 @@ public class SpringCrudController {
         return "update";
     }
 
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    public String update(HttpSession session, Integer id, Integer interstate, Integer mileMarker, Integer numberOfVehicles, String description) {
+        CrashReport crashReport = crashReports.findFirstById(id);
+        String username = (String) session.getAttribute("username");
+        if (crashReport != null && crashReport.getUser().getUsername().equals(username)) {
+            updateReport(crashReport, interstate, mileMarker, numberOfVehicles, description);
+        }
+        return "redirect:/";
+    }
+
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     public String delete(HttpSession session, Integer id) {
         String crashReportUsername = crashReports.findUser_UsernameById(id);
@@ -85,5 +95,21 @@ public class SpringCrudController {
             crashReports.delete(id);
         }
         return "redirect:/";
+    }
+
+    private void updateReport(CrashReport crashReport, Integer interstate, Integer mileMarker, Integer numberOfVehicles, String description) {
+        if (interstate != null && interstate != crashReport.getInterstate()) {
+            crashReport.setInterstate(interstate);
+        }
+        if (mileMarker != null && mileMarker != crashReport.getMileMarker()) {
+            crashReport.setMileMarker(mileMarker);
+        }
+        if (numberOfVehicles != null && numberOfVehicles != crashReport.getNumberOfVehicles()) {
+            crashReport.setNumberOfVehicles(numberOfVehicles);
+        }
+        if (description != null && !description.isEmpty() && !description.equals(crashReport.getDescription())) {
+            crashReport.setDescription(description);
+        }
+        crashReports.save(crashReport);
     }
 }

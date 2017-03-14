@@ -7,10 +7,11 @@
 <body>
 {{#crashReport}}
 <form action="/update" method="post">
-Interstate: <input type="number" value="{{interstate}}" name="interstate">
-Mile Marker: <input type="number" value="{{mileMarker}}" name="mileMarker">
-Number of Vehicles: <input type="number" value="{{numberOfVehicles}}" name="numberOfVehicles">
-Description: <input type="text" value="{{description}}" name="description">
+<input type="hidden" name="id" value="{{id}}">
+Interstate: <input type="number" value="{{interstate}}" name="interstate"><br>
+Mile Marker: <input type="number" value="{{mileMarker}}" name="mileMarker"><br>
+Number of Vehicles: <input type="number" value="{{numberOfVehicles}}" name="numberOfVehicles"><br>
+Description: <input type="text" value="{{description}}" name="description"><br>
 
 <button type="submit">Update</button>
 </form>

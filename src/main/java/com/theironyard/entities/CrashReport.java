@@ -43,4 +43,36 @@ public class CrashReport {
     public User getUser() {
         return user;
     }
+
+    public int getInterstate() {
+        return interstate;
+    }
+
+    public int getMileMarker() {
+        return mileMarker;
+    }
+
+    public int getNumberOfVehicles() {
+        return numberOfVehicles;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setInterstate(int interstate) {
+        this.interstate = interstate;
+    }
+
+    public void setMileMarker(int mileMarker) {
+        this.mileMarker = mileMarker;
+    }
+
+    public void setNumberOfVehicles(int numberOfVehicles) {
+        this.numberOfVehicles = numberOfVehicles;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
