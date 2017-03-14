@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="enter name" name="name"/>
+    <input type="password" placeholder="enter password" name="password"/>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<h1 class="text-center">Welcome, {{name}}! </h1>
+<h5 class="text-center">Track your things...</h5>
+<form action="/create-event" method="post">
+    <input type="text" placeholder="description" name="description" size="50"/>
+    <input type="datetime-local" name="localDate" value="{{now}}"/>
+    <button type="submit">Add Event</button>
+</form>
+{{/user}}
+<h3 class="text-center">Your Items</h3>
+{{#userItems}}
+<h5>{{description}} {{localDate}}</h5>
+<!-- Small modal -->
+<div>
+<button style="display:inline;" type="button" class="btn btn-primary" data-toggle="modal"  data-target="#modal{{id}}">Update</button>
+<div id="modal{{id}}" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Text</h4>
+            </div>
+            <form style="display: inline" action="/update" method="post">
+                <input type="text" placeholder="description for updating" name="description" size="30"/>
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Update</button>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form style="display: inline;" action="/delete?id={{id}}" method="post">
+    <button style="background-color: red; color: white; height: 34px;" type="submit">X</button>
+</form>
+</div>
+<br/>
+
+{{/userItems}}
+<hr>
+<h3>Other's Items</h3>
+{{#events}}
+    <h5> {{description}} {{localDate}}</h5>
+    <br/>
+{{/events}}
+</body>
+</html>
