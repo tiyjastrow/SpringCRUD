@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Tracker</title>
+</head>
+<body>
+
+{{^user}}
+    <form action="/login" method="post">
+        <input type="text" placeholder="Name" name="name">
+        <input type="password" placeholder="Password" name="password">
+        <button type="submit">Login</button>
+    </form>
+{{/user}}
+
+{{#user}}
+    Welcome, {{name}}! <br/>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br/>
+
+<form action="/create-item" method="post">
+    <input type="text" placeholder="Food Item" name="foodName"/>
+    <input type="number" placeholder="Calories" name="calories">
+    <input type="datetime-local" placeholder="Consumption Date" name="consumptionDate" value="{{now}}">
+    <button type="submit">Add Food Item</button>
+</form>
+
+<table>
+    <tr>
+        <th>Food Item</th>
+        <th>Calories</th>
+        <th>Date of Consumption</th>
+        <th>Edit</th>
+    </tr>
+
+    {{#food_items}}
+    <tr>
+        <td>{{name}}</td>
+        <td>{{calories}}</td>
+        <td>{{consumptionDateTime}}</td>
+        <td><form action="/delete-item" method="post"><input type="hidden" value="{{id}}" name="id"/><button type="submit">Delete</button></form></td>
+        <td><form action="/edit" method="get"><input type="hidden" value="{{id}}" name="id"/><button type="submit">Edit</button></form></td>
+    </tr>
+    {{/food_items}}
+
+</table>
+
+{{/user}}
+</body>
+</html>
