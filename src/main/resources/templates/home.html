@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="name" name="userName" required/>
+    <input type="password" placeholder="password" name="password" required/>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Welcome, {{name}}. <br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+<form action="/create-contact" method="post">
+    <input type="text" placeholder="name" name="contactName"/>
+    <input type="text" placeholder="email" name="email"/>
+    <input type="text" placeholder="phone" name="phone"/>
+    <button type="submit">Add Contact</button>
+</form>
+{{/user}}
+
+{{#contacts}}
+    {{name}} - {{email}} - {{phone}} <br>
+{{/contacts}}
+</body>
+</html>
