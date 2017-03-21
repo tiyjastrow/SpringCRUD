@@ -14,7 +14,7 @@
 {{/user}}
 
 {{#user}}
-Welcome, {{name}}. <br>
+Welcome, {{name}}.
 <form action="/logout" method="post">
     <button type="submit">Logout</button>
 </form>
@@ -25,10 +25,29 @@ Welcome, {{name}}. <br>
     <input type="text" placeholder="phone" name="phone"/>
     <button type="submit">Add Contact</button>
 </form>
+<h5>Your Contacts</h5>
 {{/user}}
 
-{{#contacts}}
-    {{name}} - {{email}} - {{phone}} <br>
-{{/contacts}}
+{{#usersContacts}}
+{{name}} - {{email}} - {{phone}} <form action="/edit" method="post"><input type="hidden" value={{id}} name="editId"/><button type="submit">Edit</button></form><form action="/delete" method="post"><input type="hidden" value={{id}} name="deleteId"/> <button type="submit">Delete</button></form>
+{{/usersContacts}}
+
+<h5>All Contacts</h5>
+{{#listOfContacts}}
+{{name}} - {{email}} - {{phone}} <br>
+{{/listOfContacts}}
+<br>
+
+{{#edit}}
+<h5>Edit Contact</h5>
+<form action="/edit-contact" method="post">
+    <input type="hidden"
+    <input type="text" placeholder="name" name="contactName"/>
+    <input type="text" placeholder="email" name="email"/>
+    <input type="text" placeholder="phone" name="phone"/>
+    <button type="submit">Submit</button>
+</form>
+{{/edit}}
 </body>
 </html>
+

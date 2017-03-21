@@ -20,15 +20,25 @@ public class SpringCrudController {
     @Autowired
     ContactRepository contacts;
 
-    @RequestMapping(path ="/", method = RequestMethod.GET)
-    public String home(Model model, HttpSession session){
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String home(Model model, HttpSession session) {
         String userName = (String) session.getAttribute("userName");
-        //List<Contact> listOfContacts = contacts.findAllByNameOrderByNameAsc();
         if (userName != null) {
             User user = users.findFirstByName(userName);
             model.addAttribute("user", user);
+            List<Contact> usersContacts = contacts.findAllByUser(user);
+            model.addAttribute("usersContacts", usersContacts);
         }
-        //model.addAttribute("listOfContacts", listOfContacts);
+
+        List<Contact> listOfContacts = contacts.findAll();
+        if (listOfContacts != null) {
+            model.addAttribute("listOfContacts", listOfContacts);
+        }
+        Integer editId = (Integer) session.getAttribute("edit");
+        if (editId != null) {
+            User user = users.findById(editId);
+            model.addAttribute("edit", user);
+        }
 
         return "home";
     }
@@ -38,8 +48,7 @@ public class SpringCrudController {
         User user = users.findFirstByName(userName);
         if (user == null) {
             users.save(new User(userName, password));
-        }
-        else if(! user.verifyPassword(password)){
+        } else if (!user.verifyPassword(password)) {
             throw new Exception("Login failed");
         }
         session.setAttribute("userName", userName);
@@ -47,16 +56,38 @@ public class SpringCrudController {
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
 
     @RequestMapping(path = "/create-contact", method = RequestMethod.POST)
-    public void createContact(HttpSession session, String contactName, String email, String phone){
+    public String createContact(HttpSession session, String contactName, String email, String phone) {
         String userName = (String) session.getAttribute("userName");
         User user = users.findFirstByName(userName);
         Contact contact = new Contact(contactName, email, phone, user);
         contacts.save(contact);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
+    public String delete(Integer contactId) {
+        contacts.delete(contactId);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
+    public String edit(HttpSession session, String editId) {
+        session.setAttribute("edit", editId);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/edit-contact", method = RequestMethod.POST)
+    public String editContact(HttpSession session) {
+
+        //contacts.
+
+        session.removeAttribute("edit");
+        return "redirect:/";
     }
 }
