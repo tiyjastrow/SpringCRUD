@@ -30,6 +30,13 @@ public class Contact {
         this.phone = phone;
         this.user = user;
     }
+    public Contact(Integer id, String name, String email, String phone, User user) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.user = user;
+    }
 
 
     public String getName() {

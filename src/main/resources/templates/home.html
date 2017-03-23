@@ -29,7 +29,7 @@ Welcome, {{name}}.
 {{/user}}
 
 {{#usersContacts}}
-{{name}} - {{email}} - {{phone}} <form action="/edit" method="post"><input type="hidden" value={{id}} name="editId"/><button type="submit">Edit</button></form><form action="/delete" method="post"><input type="hidden" value={{id}} name="deleteId"/> <button type="submit">Delete</button></form>
+{{name}} - {{email}} - {{phone}} <form action="/edit" method="post"><input type="hidden" value="{{id}}" name="editId"/><input type="hidden" value="{{user}}" name="editUser"/><button type="submit">Edit</button></form><form action="/delete" method="post"><input type="hidden" value="{{id}}" name="deleteId"/> <button type="submit">Delete</button></form>
 {{/usersContacts}}
 
 <h5>All Contacts</h5>
@@ -38,16 +38,15 @@ Welcome, {{name}}.
 {{/listOfContacts}}
 <br>
 
-{{#edit}}
+{{#editId}}
 <h5>Edit Contact</h5>
 <form action="/edit-contact" method="post">
-    <input type="hidden"
     <input type="text" placeholder="name" name="contactName"/>
     <input type="text" placeholder="email" name="email"/>
     <input type="text" placeholder="phone" name="phone"/>
     <button type="submit">Submit</button>
 </form>
-{{/edit}}
+{{/editId}}
 </body>
 </html>
 
