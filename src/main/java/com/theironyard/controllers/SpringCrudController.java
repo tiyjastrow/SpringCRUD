@@ -34,9 +34,9 @@ public class SpringCrudController {
         if (listOfContacts != null) {
             model.addAttribute("listOfContacts", listOfContacts);
         }
+
         Integer editId = (Integer)session.getAttribute("editId");
         if (editId != null) {
-            User user = users.findById(editId);
             model.addAttribute("editId", editId);
         }
 
@@ -77,19 +77,19 @@ public class SpringCrudController {
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
-    public String edit(HttpSession session, Integer editId, Integer user) {
+    public String edit(HttpSession session, Integer editId) {
         session.setAttribute("editId", editId);
-        session.setAttribute("user", user);
         return "redirect:/";
     }
 
     @RequestMapping(path = "/edit-contact", method = RequestMethod.POST)
     public String editContact(HttpSession session, String contactName, String phone, String email) {
         Integer editId = (Integer) session.getAttribute("editId");
-        User user = users.findById((Integer) session.getAttribute("user"));
+        session.removeAttribute("editId");
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findFirstByName(userName);
         Contact contact = new Contact(editId, contactName, email, phone, user);
         contacts.save(contact);
-        session.removeAttribute("editId");  //after submitting edit, "new" entry does not exist in usercontacts, check database
         return "redirect:/";
     }
 }
