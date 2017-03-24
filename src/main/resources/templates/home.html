@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="name" name="userName" required/>
+    <input type="password" placeholder="password" name="password" required/>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Welcome, {{name}}.
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+<form action="/create-contact" method="post">
+    <input type="text" placeholder="name" name="contactName"/>
+    <input type="text" placeholder="email" name="email"/>
+    <input type="text" placeholder="phone" name="phone"/>
+    <button type="submit">Add Contact</button>
+</form>
+<h5>Your Contacts</h5>
+{{/user}}
+
+{{#usersContacts}}
+{{name}} - {{email}} - {{phone}}
+<form action="/edit" method="post">
+    <input type="hidden" value="{{id}}" name="editId"/>
+    <button type="submit">Edit</button>
+</form>
+<form action="/delete" method="post">
+    <input type="hidden" value="{{id}}" name="deleteId"/>
+    <button type="submit">Delete</button>
+</form>
+{{/usersContacts}}
+
+<h5>All Contacts</h5>
+{{#listOfContacts}}
+{{name}} - {{email}} - {{phone}} <br>
+{{/listOfContacts}}
+<br>
+
+{{#editId}}
+<h5>Edit Contact</h5>
+<form action="/edit-contact" method="post">
+    <input type="text" placeholder="name" name="contactName"/>
+    <input type="text" placeholder="email" name="email"/>
+    <input type="text" placeholder="phone" name="phone"/>
+    <button type="submit">Submit</button>
+</form>
+{{/editId}}
+</body>
+</html>
+
