@@ -1,0 +1,43 @@
+<html>
+<body>
+
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter your name" name="userName"/>
+    <input type="text" placeholder="Enter password" name="password"/>
+    <button type="submit">Login</button>
+</form>
+
+
+<form action="/add-recipe" method="post">
+    <input type="text" placeholder="Add Recipe" name="createRecipe"/
+
+    <button type="submit">Add Recipe</button>
+</form>
+
+
+<ol>
+    {{#recipes}}
+    <li>
+        {{id}} {{text}}
+        <form action="/modify-recipe" method="post">
+            <input type="hidden" value="{{id}}" name="id"/>
+            <button type="submit">Edit</button>
+        </form>
+    </li>
+    {{/recipes}}
+</ol>
+
+
+<ol>
+    {{#recipes}}
+    <li>
+        {{id}} {{text}}
+        <form action="/delete-recipe" method="post">
+            <input type="hidden" value="{{id}}" name="id"/>
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {{/recipes}}
+</ol>
+</body>
+</html>
