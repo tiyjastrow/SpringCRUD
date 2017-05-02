@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident Reports</title>
+</head>
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Username" name="username">
+    <input type="password" placeholder="Password" name="password">
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Hello, {{username}}!
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+<form action="/report-crash" method="post">
+    <input type="number" placeholder="Interstate #" name="interstate">
+    <input type="number" placeholder="Mile Marker" name="mileMarker">
+    <input type="number" placeholder="# Of Vehicles" name="numberOfVehicles">
+    <input type="text" placeholder="Description" name="description">
+    <button type="submit">Report</button>
+</form>
+
+{{#userReports}}
+I-{{interstate}}, Mile Marker {{mileMarker}}, Number of Vehicles {{numberOfVehicles}}, Description {{description}}, {{time}}
+<a href="/update?id={{id}}"><button>Update</button></a>
+<form action="/delete?id={{id}}" method="post">
+    <button type="submit">Delete</button>
+</form> <br>
+{{/userReports}}
+{{/user}}
+
+<hr>
+{{#crashReports}}
+I-{{interstate}}, Mile Marker {{mileMarker}}, Number of Vehicles {{numberOfVehicles}}, Description {{description}}
+Submitted By {{#user}} {{username}} {{/user}} {{time}}<br>
+{{/crashReports}}
+</body>
+</html>
